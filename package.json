@@ -1,0 +1,26 @@
+{
+  "name": "element-custom",
+  "version": "1.0.0",
+  "repository": "https://github.com/Ayerss/element-custom.git",
+  "author": "Ayers",
+  "license": "MIT",
+  "scripts": {
+    "serve": "start-storybook -p 3000"
+  },
+  "dependencies": {
+    "element-ui": "^2.13.0",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@storybook/vue": "^5.3.18",
+    "babel-loader": "^8.1.0",
+    "babel-preset-vue": "^2.0.2",
+    "css-loader": "^3.5.2",
+    "sass": "^1.26.3",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "vue-loader": "^15.9.1",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
