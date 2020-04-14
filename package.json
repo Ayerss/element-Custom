@@ -4,7 +4,9 @@
   "repository": "https://github.com/Ayerss/element-custom.git",
   "author": "Ayers",
   "license": "MIT",
+  "homepage": "https://ayerss.github.io/element-custom",
   "scripts": {
+    "build:storybook": "build-storybook",
     "serve": "start-storybook -p 3000"
   },
   "dependencies": {
