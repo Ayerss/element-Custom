@@ -47,16 +47,19 @@ export default {
     }
   },
   watch: {
-    refreshType(type) {
-      if (['refresh', 'search'].includes(type)) {
-        if (type === 'refresh') {
-          this.searchData()
-        } else {
-          this.search()
+    refreshType: {
+      immediate: true,
+      handler(type) {
+        if (['refresh', 'search'].includes(type)) {
+          if (type === 'refresh') {
+            this.searchData()
+          } else {
+            this.search()
+          }
+          this.$emit('update:refreshType', 'none')
         }
-        this.$emit('update:refreshType', 'none')
       }
-    }
+    },
   },
   data() {
     return {
@@ -92,12 +95,7 @@ export default {
     }
   },
   created() {
-    if (this.refreshType === 'none') {
-      this.isRequest && this.search()
-    } else {
-      this.search()
-      this.$emit('update:refreshType', 'none')
-    }
+    this.refreshType === 'none' && this.isRequest && this.search();
   }
 }
 </script>
