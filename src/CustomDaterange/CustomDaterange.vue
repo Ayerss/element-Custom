@@ -49,6 +49,11 @@ export default {
       this.$emit('update:startTime', d[0])
       this.$emit('update:endTime', d[1])
     }
+  },
+  created () {
+    if (this.startTime || this.endTime) {
+      this.val = [this.startTime, this.endTime]
+    }
   }
 }
 </script>
