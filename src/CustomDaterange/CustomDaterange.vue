@@ -48,6 +48,7 @@ export default {
       const d = Array.isArray(e) ? e : ['', '']
       this.$emit('update:startTime', d[0])
       this.$emit('update:endTime', d[1])
+      this.$emit('change', d)
     }
   },
   created () {
