@@ -47,10 +47,10 @@ export default {
       immediate: true,
       handler(type) {
         if (['refresh', 'search', 'reset'].includes(type)) {
-          if (type === 'refresh') {
-            this.searchData()
-          } else if (type === 'search') {
+          if (type === 'search') {
             this.search()
+          } else if (type === 'refresh') {
+            this.searchData()
           } else if (type === 'reset') {
             this.reset()
           }
@@ -98,6 +98,11 @@ export default {
     search() {
       this.currentPage = 1
       this.searchParams = JSON.parse(JSON.stringify(this.params))
+      this.searchData()
+    },
+    reset () {
+      this.currentPage = 1
+      this.searchParams = JSON.parse(JSON.stringify(this.originalParams))
       this.searchData()
     }
   },
