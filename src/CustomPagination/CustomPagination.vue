@@ -26,10 +26,6 @@ export default {
       type: Object,
       default: () => ({})
     },
-    isRequest: {
-      type: Boolean,
-      default: true
-    },
     refreshType: {
       type: String,
       default: 'search',
