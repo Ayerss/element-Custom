@@ -32,9 +32,9 @@ export default {
     },
     refreshType: {
       type: String,
-      default: 'none',
+      default: 'search',
       validator: function (v) {
-        return ['refresh', 'search', 'none'].includes(v)
+        return ['refresh', 'search', 'reset', 'none'].includes(v)
       }
     },
     isPag: {
@@ -50,13 +50,17 @@ export default {
     refreshType: {
       immediate: true,
       handler(type) {
-        if (['refresh', 'search'].includes(type)) {
+        if (['refresh', 'search', 'reset'].includes(type)) {
           if (type === 'refresh') {
             this.searchData()
-          } else {
+          } else if (type === 'search') {
             this.search()
+          } else if (type === 'reset') {
+            this.reset()
           }
-          this.$emit('update:refreshType', 'none')
+          setTimeout(() => {
+            this.$emit('update:refreshType', 'none')
+          }, 100)
         }
       }
     },
@@ -68,25 +72,32 @@ export default {
       total: 10,
       pageSize: 10,
       tableData: [],
-      searchParams: {}
+      searchParams: {},
+      originalParams: null
     }
   },
   methods: {
     searchData() {
-      let params = Object.assign(this.isPag ? {
+      const params = Object.assign(this.isPag ? {
         pageIndex: this.currentPage,
         pageSize: this.pageSize
       } : {}, this.searchParams)
 
       this.isLoading = true
-      this.requestFn(params).then(res => {
-        this.tableData = res.items
-        // this.$emit('change', res.items, res)
-        this.total = res.total
-      }).finally(() => {
-        this.isLoading = false
-        this.$emit('update:params', JSON.parse(JSON.stringify(this.searchParams)))
-      })
+      this.requestFn(params)
+        .then(res => {
+          this.tableData = res.items || []
+          // this.$emit('change', res.items, res)
+          this.total = res.total || 0
+        })
+        .catch(() => {
+          this.tableData = []
+          this.total = 0
+        })
+        .finally(() => {
+          this.isLoading = false
+          this.$emit('update:params', JSON.parse(JSON.stringify(this.searchParams)))
+        })
     },
     search() {
       this.currentPage = 1
@@ -95,7 +106,9 @@ export default {
     }
   },
   created() {
-    this.refreshType === 'none' && this.isRequest && this.search();
+    if (this.originalParams === null) {
+      this.originalParams = JSON.parse(JSON.stringify(this.params))
+    }
   }
 }
 </script>
